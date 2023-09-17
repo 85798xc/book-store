@@ -1,20 +1,31 @@
-package org.bookstore.database.entity;
+package org.bookstore.database.repository.entity;
+
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
+@Entity
+@Table(name = "books")
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name ="name")
     private String name;
+    @Column(name = "author")
     private String author;
-    private Long userId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Book() {};
+    public Book() {
+    }
 
-    public Book(Long id, String name, String author, Long userId) {
+    public Book(Long id, String name, String author, User user) {
         this.id = id;
         this.name = name;
         this.author = author;
-        this.userId = userId;
+        this.user = user;
     }
 
     public Long getId() {
@@ -41,12 +52,12 @@ public class Book {
         this.author = author;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -54,12 +65,12 @@ public class Book {
         if (this == o) return true;
         if (!(o instanceof Book)) return false;
         Book book = (Book) o;
-        return id.equals(book.id) && name.equals(book.name) && author.equals(book.author) && userId.equals(book.userId);
+        return Objects.equals(id, book.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, author, userId);
+        return Objects.hash(id);
     }
 
     @Override
@@ -68,7 +79,7 @@ public class Book {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", author='" + author + '\'' +
-                ", userId=" + userId +
+                ", user=" + user.getUsername() +
                 '}';
     }
 }
