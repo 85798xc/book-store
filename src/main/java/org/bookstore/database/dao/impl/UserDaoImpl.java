@@ -130,12 +130,4 @@ public class UserDaoImpl implements UserDao {
 
     }
 
-    public static void main(String[] args) {
-
-        UserDaoImpl userDao = new UserDaoImpl();
-        System.out.println(userDao.findAll());
-        // System.out.println(userDao.findById(1L));
-        //userDao.deleteById(1L);
-
-    }
 }
