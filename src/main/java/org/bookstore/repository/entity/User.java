@@ -1,4 +1,4 @@
-package org.bookstore.database.repository.entity;
+package org.bookstore.repository.entity;
 
 import jakarta.persistence.*;
 

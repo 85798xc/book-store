@@ -12,7 +12,7 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
 
-        <mapping class="org.bookstore.database.repository.entity.User"/>
-        <mapping class="org.bookstore.database.repository.entity.Book"/>
+        <mapping class="org.bookstore.repository.entity.User"/>
+        <mapping class="org.bookstore.repository.entity.Book"/>
     </session-factory>
 </hibernate-configuration>
