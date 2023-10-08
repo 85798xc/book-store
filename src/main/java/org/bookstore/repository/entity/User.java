@@ -19,7 +19,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String username, Set<Book> books) {
+    public User(Long id) {
         this.id = id;
         this.username = username;
         this.books = books;
