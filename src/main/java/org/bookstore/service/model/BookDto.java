@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class BookDto {
     private String author;
-    private  String name;
+    private String name;
 
     public BookDto(String author, String name) {
         this.author = author;

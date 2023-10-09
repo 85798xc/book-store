@@ -5,10 +5,12 @@ import org.bookstore.repository.entity.User;
 import org.bookstore.service.mapper.UserMapper;
 import org.bookstore.service.model.BookDto;
 import org.bookstore.service.model.UserDto;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Component
 public class UserMapperImpl implements UserMapper {
     @Override
     public UserDto toDto(User entity) {
@@ -19,7 +21,7 @@ public class UserMapperImpl implements UserMapper {
         final UserDto userDto = new UserDto();
         userDto.setUsername(entity.getUsername());
 
-        if (!entity.getBooks().isEmpty() && entity.getBooks() != null) {
+        if (entity.getBooks() != null && !entity.getBooks().isEmpty()) {
             Set<BookDto> books = new HashSet<>();
             for (Book entityBook : entity.getBooks()) {
                 BookDto bookDto = new BookDto();
@@ -54,12 +56,12 @@ public class UserMapperImpl implements UserMapper {
     }
 
     private List<UserDto> toDto2(List<User> entities) {
-        return entities.stream().map(element -> toDto(element)).filter(element -> Objects.nonNull(element)).collect(Collectors.toList());
+        return entities.stream().map(this::toDto).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     @Override
     public List<User> toEntity(List<UserDto> dtos) {
-        return null;
+        return dtos.stream().map(this::toEntity).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
 

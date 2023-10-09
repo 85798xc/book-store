@@ -13,7 +13,7 @@ public class User {
     private Long id;
     @Column(name = "username")
     private String username;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Book> books;
 
     public User() {

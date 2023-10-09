@@ -75,8 +75,18 @@ public class Book {
 
     @Override
     public String toString() {
+        if (user == null) {
+            return "Book{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    ", author='" + author + '\'' +
+                    '}';
+        }
         return "Book{" +
                 "id=" + id +
-                ", name='" + name + '\'' + '}';
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", user=" + user +
+                '}';
     }
 }
