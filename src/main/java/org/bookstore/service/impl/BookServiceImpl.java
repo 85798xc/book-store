@@ -2,6 +2,7 @@ package org.bookstore.service.impl;
 
 import org.bookstore.repository.BookRepository;
 import org.bookstore.repository.entity.Book;
+import org.bookstore.repository.entity.User;
 import org.bookstore.repository.impl.BookRepositoryImpl;
 import org.bookstore.service.BookService;
 import org.bookstore.service.mapper.BookMapper;
@@ -27,32 +28,35 @@ public class BookServiceImpl implements BookService {
     public List<BookDto> getAll() {
         Optional<List<Book>> optionalBooks = bookRepository.findAll();
         List<Book> entities = optionalBooks.orElseThrow(() -> new RuntimeException("No books"));
-        List<BookDto> bookDtos = bookMapper.toDto(entities);
-        return bookDtos;
+        return bookMapper.toDto(entities);
     }
 
     @Override
     public BookDto getById(Long id) {
-        return null;
+        Optional<Book> optionalBook = bookRepository.findById(id);
+        Book book = optionalBook.orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
+        return bookMapper.toDto(book);
     }
 
     @Override
     public void add(BookDto bookDto) {
+        Book book = bookMapper.toEntity(bookDto);
+        bookRepository.create(book);
 
     }
 
     @Override
     public BookDto changeById(Long id, BookDto bookDto) {
-        return null;
+        Book updatedBook = bookMapper.toEntity(bookDto);
+        Optional<Book> optionalBook = bookRepository.updateById(id, updatedBook);
+        Book book = optionalBook.orElseThrow(() -> new RuntimeException("Book not found"));
+        return bookMapper.toDto(book);
     }
 
     @Override
     public void removeById(Long id) {
-
-    }
-
-    public static void main(String[] args) {
-        BookService bookService = new BookServiceImpl(new BookRepositoryImpl(new Configuration().configure().buildSessionFactory()), new BookMapperImpl());
-        System.out.println(bookService.getAll());
+        bookRepository.deleteById(id);
     }
 }
+
+

@@ -28,33 +28,33 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> getAll() {
         Optional<List<User>> optionalUsers = userRepository.findAll();
         List<User> entities = optionalUsers.orElseThrow(() -> new RuntimeException("No users"));
-        List<UserDto> userDtos = userMapper.toDto(entities);
-        return userDtos;
+        return userMapper.toDto(entities);
     }
 
     @Override
     public UserDto getById(Long id) {
-        return null;
+        Optional<User> optionalUser = userRepository.findById(id);
+        User user = optionalUser.orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+        return userMapper.toDto(user);
     }
 
     @Override
     public void add(UserDto userDto) {
-
+        User user = userMapper.toEntity(userDto);
+        userRepository.create(user);
     }
 
     @Override
     public UserDto changeById(Long id, UserDto userDto) {
-        return null;
+        User userUpdateTo = userMapper.toEntity(userDto);
+        Optional<User> optionalUser = userRepository.updateById(id, userUpdateTo);
+        User user = optionalUser.orElseThrow(() -> new RuntimeException("User not found"));
+        return userMapper.toDto(user);
     }
 
     @Override
     public void removeById(Long id) {
-
+        userRepository.deleteById(id);
     }
 
-    public static void main(String[] args) {
-        UserService userService = new UserServiceImpl(new UserRepositoryImpl(new Configuration().configure().buildSessionFactory()), new UserMapperImpl());
-
-        System.out.println(userService.getAll());
-    }
 }
