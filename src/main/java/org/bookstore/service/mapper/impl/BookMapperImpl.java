@@ -1,10 +1,8 @@
 package org.bookstore.service.mapper.impl;
 
 import org.bookstore.repository.entity.Book;
-import org.bookstore.repository.entity.User;
 import org.bookstore.service.mapper.BookMapper;
 import org.bookstore.service.model.BookDto;
-import org.bookstore.service.model.UserDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +18,7 @@ public class BookMapperImpl implements BookMapper {
 
         final BookDto bookDto = new BookDto();
         bookDto.setName(entity.getName());
+        bookDto.setAuthor(entity.getAuthor());
 
         return bookDto;
     }
@@ -31,6 +30,7 @@ public class BookMapperImpl implements BookMapper {
         }
         final Book book = new Book();
         book.setName(dto.getName());
+        book.setAuthor(dto.getAuthor());
 
         return book;
     }

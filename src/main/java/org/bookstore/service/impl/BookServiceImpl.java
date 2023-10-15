@@ -48,32 +48,15 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto changeById(Long id, BookDto bookDto) {
         Book updatedBook = bookMapper.toEntity(bookDto);
-
-        Optional<Book> optionalUpdatedBook = bookRepository.updateById(id, updatedBook);
-
-        if (optionalUpdatedBook.isPresent()) {
-
-            return bookMapper.toDto(optionalUpdatedBook.get());
-        } else {
-
-            throw new RuntimeException("Book not found with id: " + id);
-        }
+        Optional<Book> optionalBook = bookRepository.updateById(id, updatedBook);
+        Book book = optionalBook.orElseThrow(() -> new RuntimeException("Book not found"));
+        return bookMapper.toDto(book);
     }
 
     @Override
     public void removeById(Long id) {
-        Optional<Book> optionalBook = bookRepository.findById(id);
-        Book book = optionalBook.orElseThrow(()-> new RuntimeException("Book not found with id: \" + id"));
         bookRepository.deleteById(id);
-
-    }
-
-    public static void main(String[] args) {
-        BookService bookService = new BookServiceImpl(new BookRepositoryImpl(new Configuration().configure().buildSessionFactory()), new BookMapperImpl());
-        System.out.println(bookService.getAll());
-
-        System.out.println(bookService.getById(1L));
-
-
     }
 }
+
+

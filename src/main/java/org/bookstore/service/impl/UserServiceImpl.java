@@ -46,34 +46,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto changeById(Long id, UserDto userDto) {
-        User updatedUser = userMapper.toEntity(userDto);
-
-        Optional<User> optionalUpdatedUser = userRepository.updateById(id, updatedUser);
-
-        if (optionalUpdatedUser.isPresent()) {
-
-            return userMapper.toDto(optionalUpdatedUser.get());
-        } else {
-
-            throw new RuntimeException("User not found with id: " + id);
-        }
+        User userUpdateTo = userMapper.toEntity(userDto);
+        Optional<User> optionalUser = userRepository.updateById(id, userUpdateTo);
+        User user = optionalUser.orElseThrow(() -> new RuntimeException("User not found"));
+        return userMapper.toDto(user);
     }
 
     @Override
     public void removeById(Long id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        User user = optionalUser.orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-
-
         userRepository.deleteById(id);
-
     }
 
-    public static void main(String[] args) {
-        UserService userService = new UserServiceImpl(new UserRepositoryImpl(new Configuration().configure().buildSessionFactory()), new UserMapperImpl());
-
-
-
-        System.out.println(userService.getAll());
-    }
 }

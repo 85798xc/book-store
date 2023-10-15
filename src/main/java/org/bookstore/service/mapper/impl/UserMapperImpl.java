@@ -55,10 +55,6 @@ public class UserMapperImpl implements UserMapper {
         return list;
     }
 
-    private List<UserDto> toDto2(List<User> entities) {
-        return entities.stream().map(this::toDto).filter(Objects::nonNull).collect(Collectors.toList());
-    }
-
     @Override
     public List<User> toEntity(List<UserDto> dtos) {
         return dtos.stream().map(this::toEntity).filter(Objects::nonNull).collect(Collectors.toList());
