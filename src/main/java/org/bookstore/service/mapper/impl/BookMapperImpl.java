@@ -3,12 +3,14 @@ package org.bookstore.service.mapper.impl;
 import org.bookstore.repository.entity.Book;
 import org.bookstore.service.mapper.BookMapper;
 import org.bookstore.service.model.BookDto;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Component
 public class BookMapperImpl implements BookMapper {
     @Override
     public BookDto toDto(Book entity) {

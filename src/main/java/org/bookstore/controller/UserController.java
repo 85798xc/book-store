@@ -5,10 +5,7 @@ import org.bookstore.service.impl.UserServiceImpl;
 import org.bookstore.service.model.UserDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,12 +30,26 @@ public class UserController {
         ResponseEntity<UserDto> response = new ResponseEntity<>(userDto, HttpStatus.OK);
         return response;
     }
-
+@PostMapping("/addUser")
     public ResponseEntity<Void> addUser (UserDto userDto){
 
-       userService.add(userDto);
+      userService.add(userDto);
+    return ResponseEntity.created(null).build();
 
-    }
+}
+@PutMapping ("/updateUserById")
+    public ResponseEntity<UserDto> updateUserById(@PathVariable Long id , UserDto userDto){
+
+        userService.changeById(id , userDto);
+    ResponseEntity<UserDto> response = new ResponseEntity<>(userDto, HttpStatus.OK);
+        return response;
+}
+@DeleteMapping("/deleteUser")
+    public ResponseEntity<Void> deleteUser (@PathVariable Long id){
+        userService.removeById(id);
+    return ResponseEntity.created(null).build();
+}
+
 
 
 }

@@ -9,11 +9,13 @@ import org.bookstore.service.mapper.BookMapper;
 import org.bookstore.service.mapper.impl.BookMapperImpl;
 import org.bookstore.service.model.BookDto;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
