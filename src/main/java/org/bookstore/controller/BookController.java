@@ -3,7 +3,6 @@ package org.bookstore.controller;
 
 import org.bookstore.service.BookService;
 import org.bookstore.service.model.BookDto;
-import org.bookstore.service.model.UserDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,30 +29,26 @@ public class BookController {
     @GetMapping("/books/{id}")
     public ResponseEntity<BookDto> getBookById(@PathVariable Long id) {
         BookDto bookDto = bookService.getById(id);
-        ResponseEntity<BookDto> response = new ResponseEntity<>(bookDto, HttpStatus.OK);
-        return response;
+        return new ResponseEntity<>(bookDto, HttpStatus.OK);
     }
 
-    @PostMapping("/addBook")
-    public ResponseEntity<Void> addBook(BookDto bookDto) {
-
+    @PostMapping("/books")
+    public ResponseEntity<Void> addBook(@RequestBody BookDto bookDto) {
         bookService.add(bookDto);
-        return ResponseEntity.created(null).build();
+        return ResponseEntity.ok().build();
 
     }
 
-    @PutMapping("/updateBookById")
-    public ResponseEntity<BookDto> updateBookById(@PathVariable Long id, BookDto bookDto) {
-
+    @PutMapping("/books/{id}")
+    public ResponseEntity<BookDto> updateBookById(@PathVariable Long id, @RequestBody BookDto bookDto) {
         bookService.changeById(id, bookDto);
-        ResponseEntity<BookDto> response = new ResponseEntity<>(bookDto, HttpStatus.OK);
-        return response;
+        return new ResponseEntity<>(bookDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteBook")
+    @DeleteMapping("/books/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.removeById(id);
-        return ResponseEntity.created(URI.create("/books")).build();
+        return ResponseEntity.ok().build();
     }
 
 

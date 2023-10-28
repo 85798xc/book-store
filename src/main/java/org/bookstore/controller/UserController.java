@@ -1,7 +1,6 @@
 package org.bookstore.controller;
 
 import org.bookstore.service.UserService;
-import org.bookstore.service.impl.UserServiceImpl;
 import org.bookstore.service.model.UserDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,29 +26,27 @@ public class UserController {
     @GetMapping("/users/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
         UserDto userDto = userService.getById(id);
-        ResponseEntity<UserDto> response = new ResponseEntity<>(userDto, HttpStatus.OK);
-        return response;
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
-@PostMapping("/addUser")
-    public ResponseEntity<Void> addUser (UserDto userDto){
 
-      userService.add(userDto);
-    return ResponseEntity.created(null).build();
+    @PostMapping("/users")
+    public ResponseEntity<Void> addUser(@RequestBody UserDto userDto) {
+        userService.add(userDto);
+        return ResponseEntity.ok().build();
 
-}
-@PutMapping ("/updateUserById")
-    public ResponseEntity<UserDto> updateUserById(@PathVariable Long id , UserDto userDto){
+    }
 
-        userService.changeById(id , userDto);
-    ResponseEntity<UserDto> response = new ResponseEntity<>(userDto, HttpStatus.OK);
-        return response;
-}
-@DeleteMapping("/deleteUser")
-    public ResponseEntity<Void> deleteUser (@PathVariable Long id){
+    @PutMapping("/users/{id}")
+    public ResponseEntity<UserDto> updateUserById(@PathVariable Long id, @RequestBody UserDto userDto) {
+        userService.changeById(id, userDto);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.removeById(id);
-    return ResponseEntity.created(null).build();
-}
-
+        return ResponseEntity.ok().build();
+    }
 
 
 }
