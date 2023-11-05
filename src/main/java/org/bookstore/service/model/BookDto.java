@@ -33,8 +33,7 @@ public class BookDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BookDto)) return false;
-        BookDto bookDto = (BookDto) o;
+        if (!(o instanceof BookDto bookDto)) return false;
         return Objects.equals(author, bookDto.author) && Objects.equals(name, bookDto.name);
     }
 

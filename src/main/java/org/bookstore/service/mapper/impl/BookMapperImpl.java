@@ -43,7 +43,7 @@ public class BookMapperImpl implements BookMapper {
         for (Book book : entities){
             list.add(toDto(book));
         }
-        return null;
+        return list;
     }
 
     @Override
